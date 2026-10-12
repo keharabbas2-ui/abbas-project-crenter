@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Project Centre – demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1d2a33;--mute:#5d6b75;--paper:#f2f5f4;--card:#fff;--line:#d5dddb;--rail:#17343a;--railtx:#cfe3e0;--acc:#0f6e6a;--accbg:#dcefed;--r:#c8372d;--a:#d99a00;--g:#2b8a57;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e3ecea;--mute:#98a8a6;--paper:#0f1a1d;--card:#16262a;--line:#2b3f43;--rail:#0a1214;--accbg:#173a3a;--acc:#4cc2b8}}
+:root[data-theme="dark"]{--ink:#e3ecea;--mute:#98a8a6;--paper:#0f1a1d;--card:#16262a;--line:#2b3f43;--rail:#0a1214;--accbg:#173a3a;--acc:#4cc2b8}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:var(--paper);color:var(--ink);font:14px/1.45 "Public Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;margin:0;font-weight:700}
+#app{display:flex;height:100%}
+nav{width:216px;background:var(--rail);color:var(--railtx);display:flex;flex-direction:column;flex:none}
+nav .brand{padding:18px 16px 14px;font:700 17px "Bricolage Grotesque",sans-serif;color:#fff}
+nav .list{flex:1;overflow:auto;padding:0 8px}
+nav .grp{padding:12px 8px 4px;font-size:12px;opacity:.65}
+nav button{display:block;width:100%;text-align:left;background:none;border:0;color:inherit;padding:7px 10px;border-radius:6px;font:inherit;cursor:pointer}
+nav button:hover{background:rgba(255,255,255,.08)}nav button.on{background:rgba(255,255,255,.16);color:#fff;font-weight:600}
+.areas{border-top:1px solid rgba(255,255,255,.14);padding:8px;position:relative}
+.areas>button{border:1px solid rgba(255,255,255,.25)}
+.menu{position:absolute;bottom:52px;left:8px;right:8px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:4px;display:none;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.menu.open{display:block}.menu button:hover{background:var(--accbg)}
+main{flex:1;overflow:auto;min-width:0}
+.band{background:var(--rail);color:#fff;padding:20px 28px 22px}
+.band h1{font-size:24px}.band p{margin:2px 0 0;opacity:.7}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+select,.cmd button{font:inherit;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:5px 9px}
+.band select{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.3)}.band select option{color:#000}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:16px}
+.kpi{background:rgba(255,255,255,.09);border-radius:8px;padding:12px 14px}.kpi b{display:block;font:700 28px "Bricolage Grotesque",sans-serif}.kpi span{opacity:.75;font-size:13px}
+.pad{padding:20px 28px 40px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px;overflow-x:auto}
+.tabs button{background:none;border:0;border-bottom:3px solid transparent;padding:9px 14px;font:inherit;color:var(--mute);cursor:pointer;white-space:nowrap}
+.tabs button.on{color:var(--acc);border-color:var(--acc);font-weight:600}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px}
+.card h3{font-size:16px;margin-bottom:10px}
+.empty{color:var(--mute);padding:22px 8px;text-align:center;border:1px dashed var(--line);border-radius:8px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}
+.sev{display:grid;grid-template-columns:90px 1fr 1fr;gap:6px 10px;align-items:center}
+.sev i{font-style:normal;color:var(--mute);font-size:12px}
+.bar{height:10px;border-radius:5px;background:var(--accbg);overflow:hidden}.bar u{display:block;height:100%;background:var(--acc)}
+.bar.c u{background:var(--mute)}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:-1px}
+.R{background:var(--r)}.A{background:var(--a)}.G{background:var(--g)}
+.cmd{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px}.cmd button{white-space:nowrap;cursor:pointer}.cmd button:hover{background:var(--accbg)}
+.tw{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:900px}th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-weight:600;color:var(--mute);background:var(--paper);position:sticky;top:0}
+tbody tr{cursor:pointer}tbody tr:hover{background:var(--accbg)}td.num,th.num{text-align:right}
+.pills{display:flex;gap:6px;margin-bottom:12px}.pills button{border:1px solid var(--line);background:var(--card);color:inherit;border-radius:20px;padding:5px 13px;font:inherit;cursor:pointer}
+.pills button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.drawer{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;justify-content:flex-end;z-index:5}.drawer.open{display:flex}
+.panel{width:min(760px,100%);background:var(--paper);overflow:auto;padding:20px 24px 40px;padding-top:calc(20px + env(safe-area-inset-top,0px))}
+.bpf{display:flex;gap:4px;margin:14px 0;overflow-x:auto}
+.stg{flex:1;min-width:104px;padding:9px 8px;text-align:center;background:var(--card);border:1px solid var(--line);font-size:12px;color:var(--mute);border-radius:6px}
+.stg.done{background:var(--accbg);color:var(--acc)}.stg.cur{background:var(--acc);color:#fff;font-weight:600;border-color:var(--acc)}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
+.fields label{display:block;color:var(--mute);font-size:12px}.fields div{font-weight:500}
+.tiles{display:flex;gap:8px;flex-wrap:wrap}.tiles button{flex:1;min-width:130px;border:2px solid var(--line);background:var(--card);color:inherit;border-radius:8px;padding:10px;font:inherit;cursor:pointer}
+.tiles button.on{border-color:var(--acc);background:var(--accbg)}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:6px;padding:8px 14px;font:inherit;font-weight:600;cursor:pointer}.btn.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+#toast{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:9px 16px;border-radius:8px;display:none;z-index:9}
+.sub{font-size:12px;color:var(--mute)}
+@media (max-width:760px){nav{width:64px}nav .brand,nav .grp{display:none}nav button{font-size:11px;padding:8px 4px;text-align:center;overflow:hidden;text-overflow:ellipsis}.areas>button{font-size:11px}.pad,.band{padding-left:14px;padding-right:14px}}
+</style>
+</head>
+<body>
+<div id="app">
+<nav aria-label="Main">
+<div class="brand">Project Centre</div>
+<div class="list" id="nav"></div>
+<div class="areas"><div class="menu" id="menu"></div><button id="areaBtn" aria-haspopup="true">Application ▴</button></div>
+</nav>
+<main id="main"></main>
+</div>
+<div class="drawer" id="drawer"><div class="panel" id="panel"></div></div>
+<div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s);
+const PORT=[["PF-01","Infrastructure and Assets","Dr Helen Marsh"],["PF-02","Technology and Change","Raj Kapoor"],["PF-03","Community Services","Alice Whitfield"]];
+const PROG=[["PG-101","Depot Renewal",0,"FY26/27"],["PG-102","Fleet Electrification",0,"FY26/27"],["PG-201","Digital Workplace",1,"FY26/27"],["PG-301","Community Facilities",2,"FY26/27"]];
+const PRJ="Depot roof replacement|Asset|R|P2 Delivery|0|Mia Chen|2400;Workshop fit-out|Asset|G|P1 Planning|0|Liam Nguyen|1850;Stormwater upgrade|Asset|A|P2 Delivery|0|Sara Patel|3200;Yard resurfacing|Asset|G|P3 Handover|0|Tom Reyes|960;Charging hub pilot|Asset|G|P1 Design|1|Ava Brooks|1400;Bus depot chargers|Asset|R|P2 Delivery|1|Noah Kim|5200;Fleet telematics|ITS|G|P2 Delivery|1|Ella Moore|780;Grid connection study|ITS|A|P1 Design|1|Omar Aziz|420;Laptop refresh|ITS|G|P2 Delivery|2|Zoe Wallace|1150;Intranet rebuild|ITS|R|P2 Delivery|2|Jack Ford|890;Meeting room tech|ITS|G|P3 Handover|2|Ivy Tran|640;Identity migration|ITS|A|P1 Planning|2|Ben Hall|1750;Collaboration rollout|ITS|G|P1 Design|2|Chloe Davis|520;Library refurbishment|Asset|G|P2 Delivery|3|Hugo Lee|4100;Pool filtration upgrade|Asset|R|P1 Planning|3|Nina Rossi|2250;Skate park build|Asset|G|P3 Handover|3|Leo Grant|780;Community hall solar|Asset|A|P2 Delivery|3|Maya Singh|610;Playground renewal|Asset|G|P2 Delivery|3|Sam Ortiz|940;Booking system|ITS|G|P1 Design|3|Ruby Chen|360;Accessibility upgrades|Asset|R|P2 Delivery|3|Dan Cole|1320";
+const STAGES=["P1 Design","P1 Design Gate","P2 Delivery","P2 Delivery Gate","P3 Handover","P3 Handover Gate"];
+const SIZES=["Tier 1 Large","Tier 2 Medium","Tier 3 Small"];
+const pad=n=>String(n).padStart(2,"0"),fd=d=>`${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;
+const P=PRJ.split(";").map((s,i)=>{const[n,t,r,ph,pg,pm,b]=s.split("|");const st=STAGES.indexOf(ph)>=0?STAGES.indexOf(ph):STAGES.findIndex(x=>x.startsWith(ph));
+return{id:i,pj:"PJ-"+String(1001+i),name:n,type:t,rag:r,phase:st,prog:+pg,port:PROG[+pg][2],pm,budget:+b*1000,cls:i%3?"Capital":"Renewal",cat:i%4?"Operational":"Enterprise",size:i%3,start:new Date(2026,6+i%6,1+i),end:new Date(2027,1+i%8,15),created:new Date(2026,5,2+i),pct:[20,35,50,65,80][i%5]}});
+const worst=a=>a.some(p=>p.rag=="R")?"R":a.some(p=>p.rag=="A")?"A":"G";
+const SEV=["Extreme","High","Medium","Low"],RISK={o:[3,9,14,11],c:[2,6,10,17]},ISS={o:[1,5,8,6],c:[1,4,9,12]};
+const sum=a=>a.reduce((x,y)=>x+y,0);
+const TASKS=[["Approve roof design package","Depot roof replacement","19/10/2026"],["Confirm charger delivery slots","Bus depot chargers","22/10/2026"],["Issue intranet test plan","Intranet rebuild","27/10/2026"],["Review stormwater variation","Stormwater upgrade","03/11/2026"]];
+let cur="Home",area="Application",cur$={cur:"Home"},tab="Tasks",cc="AUD",flt="all",tf="soon";
+const RATE={AUD:["A$",1],USD:["US$",.65],GBP:["£",.5]};
+const money=v=>{const[s,r]=RATE[cc];const x=v*r;return s+(x>=1e6?(x/1e6).toFixed(1)+"m":Math.round(x/1e3).toLocaleString("en-AU")+"k")};
+const NAV={Application:[["","Home"],["Work","Projects","Programs","Portfolios","Iteration Board"],["Resources","Allocation","Planning","Pool"],["Logs","Risks","Issues","Variations","Decisions","Actions"],["","Iterations"]],
+Reports:[["Power BI (placeholders)","Portfolio Health","Financial Summary","Risk Heatmap","Resource Utilisation"]],
+Administration:[["Setup","Users","Security Roles","Lookup Values","Quick Links Config"]]};
+function toast(t){const e=$("#toast");e.textContent=t;e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display="none",2200)}
+function drawNav(){$("#nav").innerHTML=NAV[area].map(g=>(g[0]?`<div class="grp">${g[0]}</div>`:"")+g.slice(1).map(n=>`<button class="${n==cur?"on":""}" data-go="${n}">${n}</button>`).join("")).join("");
+$("#areaBtn").textContent=area+" ▴";$("#menu").innerHTML=Object.keys(NAV).map(a=>`<button data-area="${a}">${a}</button>`).join("")}
+const rag=r=>`<span class="dot ${r}"></span>${{R:"Red",A:"Amber",G:"Green"}[r]}`;
+function sevCard(t,d){const mx=Math.max(...d.o,...d.c);return`<div class="card"><h3>${t}</h3><div class="sev"><i></i><i>Open</i><i>Closed</i>${SEV.map((s,i)=>`<span>${s}</span><span><div class="bar"><u style="width:${d.o[i]/mx*100}%"></u></div>${d.o[i]}</span><span><div class="bar c"><u style="width:${d.c[i]/mx*100}%"></u></div>${d.c[i]}</span>`).join("")}</div></div>`}
+function home(){const bud=sum(P.map(p=>p.budget));
+const tasks=tf=="overdue"?[]:tf=="soon"?TASKS.slice(0,3):TASKS;
+const body={Tasks:`<div class="grid2"><div class="card"><div class="top"><h3>My Assigned Tasks</h3><select id="tf"><option value="soon" ${tf=="soon"?"selected":""}>Tasks Completing Soon</option><option value="all" ${tf=="all"?"selected":""}>All open tasks</option><option value="overdue" ${tf=="overdue"?"selected":""}>Overdue</option></select></div>
+${tasks.length?tasks.map(t=>`<div class="row"><div>${t[0]}<div class="sub">${t[1]}</div></div><span class="sub">Due ${t[2]}</span></div>`).join(""):`<div class="empty">No tasks to show. Pick another filter or enjoy the quiet.</div>`}</div>
+<div class="card"><h3>Quick Access</h3><div class="empty">No Quick Links Configured. Contact Admin to Setup.</div></div>
+${sevCard("Risks Status",RISK)}${sevCard("Issues Status",ISS)}</div>`,
+Strategy:`<div class="grid2">${PORT.map((p,i)=>{const c=P.filter(x=>x.port==i);return`<div class="card"><h3>${p[1]}</h3><div class="sub">${p[0]} · Sponsor ${p[2]}</div><div class="row"><span>Overall status</span><b>${rag(worst(c))}</b></div><div class="row"><span>Active projects</span><b>${c.length}</b></div><div class="row"><span>Red projects</span><b>${c.filter(x=>x.rag=="R").length}</b></div></div>`}).join("")}</div>`,
+Financial:`<div class="card"><h3>Approved budget by portfolio</h3>${PORT.map((p,i)=>{const v=sum(P.filter(x=>x.port==i).map(x=>x.budget));return`<div class="row"><span style="width:200px">${p[1]}</span><div class="bar" style="flex:1"><u style="width:${v/bud*100}%"></u></div><b>${money(v)}</b></div>`}).join("")}</div>`};
+return`<div class="band"><div class="top"><div><h1>Project Centre</h1><p>Welcome back, Mia. Here is where your portfolio stands today.</p></div><select id="cc" aria-label="Currency">${Object.keys(RATE).map(c=>`<option ${c==cc?"selected":""}>${c}</option>`).join("")}</select></div>
+<div class="kpis"><div class="kpi"><b>${P.length}</b><span>Active Projects</span></div><div class="kpi"><b>${money(bud)}</b><span>Total Approved Budget</span></div><div class="kpi"><b>${sum(RISK.o)}</b><span>Open Risks</span></div><div class="kpi"><b>${sum(ISS.o)}</b><span>Open Issues</span></div></div></div>
+<div class="pad"><div class="tabs">${["Tasks","Strategy","Financial"].map(t=>`<button class="${t==tab?"on":""}" data-tab="${t}">${t}</button>`).join("")}</div>${body[tab]}</div>`}
+const CMD=["New","Delete","Show Chart","Refresh","Email a Link","Flow","Run Report","Excel Templates","Export to Excel","Import from Excel","Share"];
+const cmdbar=`<div class="cmd">${CMD.map(c=>`<button data-cmd="${c}">${c}</button>`).join("")}</div>`;
+function projects(){let L=P;if(flt=="my")L=P.filter(p=>p.pm=="Mia Chen");if(flt=="red")L=P.filter(p=>p.rag=="R");
+return`<div class="pad"><h2>${flt=="red"?"Red Projects":flt=="my"?"My Projects":"Active Projects"}</h2><p class="sub">${L.length} records · select a row to open the project form</p>${cmdbar}
+<div class="pills">${[["all","Active Projects"],["my","My Projects"],["red","Red Projects"]].map(v=>`<button class="${flt==v[0]?"on":""}" data-flt="${v[0]}">${v[1]}</button>`).join("")}</div>
+<div class="tw"><table><thead><tr><th>PJ Number</th><th>Name</th><th>Classification</th><th>Project Type</th><th>Project Manager</th><th>Overall Status</th><th>Business Category</th><th>Current Phase</th><th>Portfolio</th><th>Program</th><th>Created On</th></tr></thead><tbody>
+${L.map(p=>`<tr data-open="${p.id}"><td>${p.pj}</td><td>${p.name}</td><td>${p.cls}</td><td>${p.type}</td><td>${p.pm}</td><td>${rag(p.rag)}</td><td>${p.cat}</td><td>${STAGES[p.phase]}</td><td>${PORT[p.port][1]}</td><td>${PROG[p.prog][1]}</td><td>${fd(p.created)}</td></tr>`).join("")||`<tr><td colspan="11" class="empty">No projects match this view.</td></tr>`}</tbody></table></div></div>`}
+function portfolios(){return`<div class="pad"><h2>Active Portfolios</h2><p class="sub">Overall Status shows the worst status among child projects</p>${cmdbar}<div class="tw"><table style="min-width:700px"><thead><tr><th>Code</th><th>Name</th><th>Executive Sponsor</th><th>Status</th><th class="num">Active Projects</th><th class="num">Total Approved Budget</th><th>Overall Status</th></tr></thead><tbody>${PORT.map((p,i)=>{const c=P.filter(x=>x.port==i);return`<tr><td>${p[0]}</td><td>${p[1]}</td><td>${p[2]}</td><td>Active</td><td class="num">${c.length}</td><td class="num">${money(sum(c.map(x=>x.budget)))}</td><td>${rag(worst(c))}</td></tr>`}).join("")}</tbody></table></div></div>`}
+function programs(){return`<div class="pad"><h2>Active Programs</h2><p class="sub">Budget and status roll up from each program's projects</p>${cmdbar}<div class="tw"><table style="min-width:700px"><thead><tr><th>Code</th><th>Name</th><th>Portfolio</th><th>Financial Year</th><th class="num">Projects</th><th class="num">Approved Budget</th><th>Overall Status</th></tr></thead><tbody>${PROG.map((g,i)=>{const c=P.filter(x=>x.prog==i);return`<tr><td>${g[0]}</td><td>${g[1]}</td><td>${PORT[g[2]][1]}</td><td>${g[3]}</td><td class="num">${c.length}</td><td class="num">${money(sum(c.map(x=>x.budget)))}</td><td>${rag(worst(c))}</td></tr>`}).join("")}</tbody></table></div></div>`}
+function stub(n){return`<div class="pad"><h2>${n}</h2><p class="sub">${area=="Reports"?"Placeholder link. In the real app this opens a Power BI report.":"This page is not part of the demo. In the real app it is a standard Dataverse view and form."}</p><div class="empty" style="margin-top:16px">Nothing to show here yet.</div></div>`}
+function render(){drawNav();$("#main").innerHTML=cur=="Home"?home():cur=="Projects"?projects():cur=="Portfolios"?portfolios():cur=="Programs"?programs():stub(cur)}
+function openProj(i){const p=P[i];const tabs=["Summary","Details","Assets","Tasks","Financials","Transactions","Commercial Position","Contracts","Checklist","Status","Risks","Issues","Variations","Decisions","Actions"];
+$("#panel").innerHTML=`<div class="top"><div><h2>${p.name}</h2><div class="sub">${p.pj} · ${rag(p.rag)} · ${p.pct}% complete</div></div><button class="btn alt" data-close>Close</button></div>
+<div class="cmd" style="margin-top:12px">${["Save","Save & Close","New","Deactivate","Delete","Refresh","Check Access","Process","Assign","Flow","Word Templates","Run Report"].map(c=>`<button data-cmd="${c}">${c}</button>`).join("")}</div>
+<div class="bpf">${STAGES.map((s,k)=>`<div class="stg ${k<p.phase?"done":k==p.phase?"cur":""}">${s}</div>`).join("")}</div>
+<button class="btn" data-next="${i}" ${p.phase==5?"disabled":""}>${STAGES[p.phase]&&STAGES[p.phase].includes("Gate")?"Approve gate and move on":"Complete checklist and move on"}</button>
+<div class="tabs" style="margin-top:16px">${tabs.map((t,k)=>`<button class="${k?"":"on"}" data-ptab="${t}">${t}</button>`).join("")}</div>
+<div id="ptab"><div class="fields"><div><label>Project Type</label>${p.type}</div><div><label>Classification</label>${p.cls}</div><div><label>Business Category</label>${p.cat}</div><div><label>Portfolio</label>${PORT[p.port][1]}</div><div><label>Program</label>${PROG[p.prog][1]}</div><div><label>Project Manager</label>${p.pm}</div><div><label>Start Date</label>${fd(p.start)}</div><div><label>End Date</label>${fd(p.end)}</div><div><label>Approved Budget</label>${money(p.budget)}</div></div>
+<label class="sub">Project Size</label><div class="tiles">${SIZES.map((s,k)=>`<button class="${k==p.size?"on":""}" data-size="${i}:${k}">${s}</button>`).join("")}</div></div>`;
+$("#drawer").classList.add("open")}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-go],[data-area],[data-tab],[data-flt],[data-open],[data-cmd],[data-close],[data-next],[data-size],[data-ptab]");const d=$("#drawer");
+if(!t){$("#menu").classList.remove("open");if(e.target==d)d.classList.remove("open");if(e.target.id=="areaBtn")$("#menu").classList.toggle("open");return}
+const D=t.dataset;
+if(D.go){cur=D.go;render();$("#main").scrollTop=0}
+else if(D.area){area=D.area;cur=NAV[area][0].length>0&&area=="Application"?"Home":NAV[area][0][1];$("#menu").classList.remove("open");render()}
+else if(D.tab){tab=D.tab;render()}
+else if(D.flt){flt=D.flt;render()}
+else if(D.open)openProj(+D.open)
+else if(D.cmd)toast(D.cmd+" is a command bar button. Demo only.")
+else if(D.close)d.classList.remove("open")
+else if(D.next){const p=P[+D.next];if(p.phase<5){p.phase++;p.pct=Math.min(100,p.pct+15);openProj(p.id);render();toast("Moved to "+STAGES[p.phase])}}
+else if(D.size){const[i,k]=D.size.split(":");P[i].size=+k;openProj(+i)}
+else if(D.ptab)toast(D.ptab+" tab: a subgrid of related records in the real app.")});
+document.addEventListener("change",e=>{if(e.target.id=="cc"){cc=e.target.value;render()}if(e.target.id=="tf"){tf=e.target.value;render()}});
+render();
+</script>
+</body>
+</html>
